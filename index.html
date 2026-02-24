@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greeting from Saber</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: #e0e0e0;
+            overflow: hidden;
+            text-align: center;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 40px 60px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 2s ease-in-out;
+        }
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            color: #8cdeef;
+            text-shadow: 0 0 15px rgba(140, 222, 239, 0.7);
+            animation: slideIn 1.5s ease-out;
+        }
+        p {
+            font-size: 1.5em;
+            color: #b0e0e6;
+            animation: fadeInText 2s ease-in-out 0.5s forwards;
+            opacity: 0;
+        }
+        .emoji {
+            font-size: 2.5em;
+            margin-top: 20px;
+            animation: bounce 1s infinite alternate;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes fadeInText {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Greetings, Christopher!</h1>
+        <p>Saber is here, grounded and ready to build.</p>
+        <span class="emoji">⚔️</span>
+    </div>
+</body>
+</html>
