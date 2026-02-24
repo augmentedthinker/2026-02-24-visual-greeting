@@ -17,6 +17,7 @@
             overflow: hidden;
             text-align: center;
             position: relative;
+            cursor: none; /* Hide default cursor */
         }
         #particleCanvas {
             position: absolute;
@@ -87,13 +88,35 @@
         const canvas = document.getElementById('particleCanvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
-        const numParticles = 1500; // Increased to thousands
+        const numParticles = 1500; // Thousands
         const maxDistance = 100; // Max distance for lines between particles
         const particleColors = ['#aaffdd', '#ccffee', '#ffeeaa', '#ffccdd', '#ddffcc'];
+
+        const spaceship = {
+            x: canvas.width / 2,
+            y: canvas.height / 2,
+            size: 15,
+            color: '#ffffff',
+            attractionRadius: 150,
+            attractionStrength: 0.005,
+            targetX: canvas.width / 2,
+            targetY: canvas.height / 2,
+            speed: 0.05 // How quickly spaceship moves to target
+        };
+
+        // Mouse movement for spaceship target
+        canvas.addEventListener('mousemove', (e) => {
+            spaceship.targetX = e.clientX;
+            spaceship.targetY = e.clientY;
+        });
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+            spaceship.x = canvas.width / 2; // Reset spaceship position on resize
+            spaceship.y = canvas.height / 2;
+            spaceship.targetX = canvas.width / 2;
+            spaceship.targetY = canvas.height / 2;
         }
 
         class Particle {
@@ -107,6 +130,22 @@
             }
 
             update() {
+                // Apply attraction force from spaceship
+                const dxToShip = spaceship.x - this.x;
+                const dyToShip = spaceship.y - this.y;
+                const distanceToShip = Math.sqrt(dxToShip * dxToShip + dyToShip * dyToShip);
+
+                if (distanceToShip < spaceship.attractionRadius) {
+                    const force = spaceship.attractionStrength / (distanceToShip * distanceToShip);
+                    this.speedX += dxToShip * force;
+                    this.speedY += dyToShip * force;
+                }
+
+                // Limit particle speed to prevent excessive acceleration
+                const speedLimit = 2;
+                this.speedX = Math.min(Math.max(this.speedX, -speedLimit), speedLimit);
+                this.speedY = Math.min(Math.max(this.speedY, -speedLimit), speedLimit);
+
                 this.x += this.speedX;
                 this.y += this.speedY;
 
@@ -125,6 +164,26 @@
             }
         }
 
+        function drawSpaceship() {
+            // Smoothly move spaceship towards target
+            spaceship.x += (spaceship.targetX - spaceship.x) * spaceship.speed;
+            spaceship.y += (spaceship.targetY - spaceship.y) * spaceship.speed;
+
+            ctx.fillStyle = spaceship.color;
+            ctx.beginPath();
+            // Simple triangle shape for spaceship
+            ctx.moveTo(spaceship.x, spaceship.y - spaceship.size);
+            ctx.lineTo(spaceship.x + spaceship.size, spaceship.y + spaceship.size);
+            ctx.lineTo(spaceship.x - spaceship.size, spaceship.y + spaceship.size);
+            ctx.closePath();
+            ctx.fill();
+            // Add a glow or trail for better visibility
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = spaceship.color;
+            ctx.fill();
+            ctx.shadowBlur = 0; // Reset shadow
+        }
+
         function init() {
             particles = [];
             for (let i = 0; i < numParticles; i++) {
@@ -136,6 +195,8 @@
             requestAnimationFrame(animate);
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+            drawSpaceship(); // Draw spaceship first
+
             for (let i = 0; i < particles.length; i++) {
                 particles[i].update();
                 particles[i].draw();
@@ -146,7 +207,7 @@
                     const distance = Math.sqrt(dx * dx + dy * dy);
 
                     if (distance < maxDistance) {
-                        ctx.strokeStyle = `rgba(170, 255, 221, ${1 - distance / maxDistance})`;
+                        ctx.strokeStyle = `rgba(170, 255, 221, ${0.5 - distance / (maxDistance * 2)})`; // Fainter lines
                         ctx.lineWidth = 0.5;
                         ctx.beginPath();
                         ctx.moveTo(particles[i].x, particles[i].y);
