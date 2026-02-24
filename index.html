@@ -18,6 +18,14 @@
             text-align: center;
             position: relative;
         }
+        #particleCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
         .container {
             background-color: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(12px);
@@ -49,37 +57,6 @@
             color: #ffeeaa; /* Golden yellow */
         }
 
-        /* Enhanced Particle styles */
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            animation: float 20s infinite ease-in-out both;
-            opacity: 0;
-            z-index: 0;
-        }
-
-        /* Generating individual particle styles for more variety */
-        .particle:nth-child(1) { width: 12px; height: 12px; top: 15%; left: 10%; animation-delay: 0s; animation-duration: 22s; background-color: rgba(255, 200, 200, 0.8); }
-        .particle:nth-child(2) { width: 16px; height: 16px; top: 85%; left: 30%; animation-delay: 1s; animation-duration: 25s; background-color: rgba(200, 255, 200, 0.7); }
-        .particle:nth-child(3) { width: 10px; height: 10px; top: 40%; left: 70%; animation-delay: 2s; animation-duration: 20s; background-color: rgba(200, 200, 255, 0.9); }
-        .particle:nth-child(4) { width: 14px; height: 14px; top: 5%; left: 80%; animation-delay: 3s; animation-duration: 28s; background-color: rgba(255, 255, 200, 0.6); }
-        .particle:nth-child(5) { width: 11px; height: 11px; top: 95%; left: 5%; animation-delay: 4s; animation-duration: 23s; background-color: rgba(255, 200, 255, 0.8); }
-        .particle:nth-child(6) { width: 13px; height: 13px; top: 25%; left: 90%; animation-delay: 5s; animation-duration: 21s; background-color: rgba(200, 255, 255, 0.7); }
-        .particle:nth-child(7) { width: 9px; height: 9px; top: 70%; left: 15%; animation-delay: 6s; animation-duration: 19s; background-color: rgba(255, 150, 150, 0.9); }
-        .particle:nth-child(8) { width: 15px; height: 15px; top: 30%; left: 45%; animation-delay: 7s; animation-duration: 26s; background-color: rgba(150, 255, 150, 0.8); }
-        .particle:nth-child(9) { width: 8px; height: 8px; top: 60%; left: 85%; animation-delay: 8s; animation-duration: 17s; background-color: rgba(150, 150, 255, 0.7); }
-        .particle:nth-child(10) { width: 17px; height: 17px; top: 10%; left: 55%; animation-delay: 9s; animation-duration: 24s; background-color: rgba(255, 255, 150, 0.9); }
-        .particle:nth-child(11) { width: 9px; height: 9px; top: 80%; left: 20%; animation-delay: 10s; animation-duration: 22s; background-color: rgba(255, 150, 255, 0.6); }
-        .particle:nth-child(12) { width: 11px; height: 11px; top: 45%; left: 5%; animation-delay: 11s; animation-duration: 20s; background-color: rgba(150, 255, 255, 0.8); }
-        .particle:nth-child(13) { width: 13px; height: 13px; top: 20%; left: 75%; animation-delay: 12s; animation-duration: 27s; background-color: rgba(255, 100, 100, 0.7); }
-        .particle:nth-child(14) { width: 7px; height: 7px; top: 65%; left: 40%; animation-delay: 13s; animation-duration: 18s; background-color: rgba(100, 255, 100, 0.9); }
-        .particle:nth-child(15) { width: 14px; height: 14px; top: 10%; left: 25%; animation-delay: 14s; animation-duration: 23s; background-color: rgba(100, 100, 255, 0.6); }
-        .particle:nth-child(16) { width: 10px; height: 10px; top: 55%; left: 95%; animation-delay: 15s; animation-duration: 20s; background-color: rgba(255, 255, 100, 0.8); }
-        .particle:nth-child(17) { width: 12px; height: 12px; top: 35%; left: 60%; animation-delay: 16s; animation-duration: 25s; background-color: rgba(255, 100, 255, 0.7); }
-        .particle:nth-child(18) { width: 8px; height: 8px; top: 75%; left: 70%; animation-delay: 17s; animation-duration: 21s; background-color: rgba(100, 255, 255, 0.9); }
-        .particle:nth-child(19) { width: 15px; height: 15px; top: 20%; left: 50%; animation-delay: 18s; animation-duration: 28s; background-color: rgba(255, 50, 50, 0.6); }
-        .particle:nth-child(20) { width: 9px; height: 9px; top: 90%; left: 40%; animation-delay: 19s; animation-duration: 22s; background-color: rgba(50, 255, 50, 0.8); }
-
         @keyframes fadeIn {
             from { opacity: 0; transform: scale(0.9); }
             to { opacity: 1; transform: scale(1); }
@@ -96,43 +73,98 @@
             from { transform: translateY(0); }
             to { transform: translateY(-10px); }
         }
-
-        @keyframes float {
-            0% { transform: translateY(0px) translateX(0px); opacity: 0; }
-            20% { opacity: 1; }
-            40% { transform: translateY(-50px) translateX(20px); }
-            60% { opacity: 1; }
-            80% { transform: translateY(-100px) translateX(-30px); }
-            100% { transform: translateY(0px) translateX(0px); opacity: 0; }
-        }
     </style>
 </head>
 <body>
+    <canvas id="particleCanvas"></canvas>
     <div class="container">
         <h1>Greetings, Christopher!</h1>
         <p>Saber is here, grounded and ready to build.</p>
         <span class="emoji">⚔️</span>
     </div>
-    <!-- Particles -->
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
-    <div class="particle"></div>
+
+    <script>
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        const numParticles = 1500; // Increased to thousands
+        const maxDistance = 100; // Max distance for lines between particles
+        const particleColors = ['#aaffdd', '#ccffee', '#ffeeaa', '#ffccdd', '#ddffcc'];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1; // Size between 1 and 3
+                this.speedX = Math.random() * 0.5 - 0.25; // Speed between -0.25 and 0.25
+                this.speedY = Math.random() * 0.5 - 0.25;
+                this.color = particleColors[Math.floor(Math.random() * particleColors.length)];
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                // Wrap particles around the screen
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            particles = [];
+            for (let i = 0; i < numParticles; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+
+                for (let j = i; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < maxDistance) {
+                        ctx.strokeStyle = `rgba(170, 255, 221, ${1 - distance / maxDistance})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        window.addEventListener('resize', () => {
+            resizeCanvas();
+            init(); // Reinitialize particles on resize to avoid rendering issues
+        });
+
+        resizeCanvas();
+        init();
+        animate();
+    </script>
 </body>
 </html>
