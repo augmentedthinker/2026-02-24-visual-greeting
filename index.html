@@ -16,6 +16,7 @@
             color: #e0e0e0;
             overflow: hidden;
             text-align: center;
+            position: relative; /* For particle positioning */
         }
         .container {
             background-color: rgba(255, 255, 255, 0.05);
@@ -25,6 +26,8 @@
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
             animation: fadeIn 2s ease-in-out;
+            position: relative; /* To keep container above particles */
+            z-index: 1;
         }
         h1 {
             font-size: 3.5em;
@@ -45,6 +48,22 @@
             animation: bounce 1s infinite alternate;
         }
 
+        /* Particle styles */
+        .particle {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            animation: float 15s infinite ease-in-out;
+            opacity: 0;
+            z-index: 0;
+        }
+        .particle:nth-child(1) { width: 6px; height: 6px; top: 20%; left: 10%; animation-delay: 0s; animation-duration: 12s; background-color: rgba(140, 222, 239, 0.6); }
+        .particle:nth-child(2) { width: 10px; height: 10px; top: 80%; left: 30%; animation-delay: 2s; animation-duration: 18s; background-color: rgba(255, 255, 255, 0.5); }
+        .particle:nth-child(3) { width: 4px; height: 4px; top: 50%; left: 70%; animation-delay: 4s; animation-duration: 14s; background-color: rgba(140, 222, 239, 0.4); }
+        .particle:nth-child(4) { width: 8px; height: 8px; top: 10%; left: 80%; animation-delay: 6s; animation-duration: 20s; background-color: rgba(255, 255, 255, 0.7); }
+        .particle:nth-child(5) { width: 7px; height: 7px; top: 90%; left: 5%; animation-delay: 8s; animation-duration: 16s; background-color: rgba(140, 222, 239, 0.5); }
+        .particle:nth-child(6) { width: 5px; height: 5px; top: 30%; left: 90%; animation-delay: 10s; animation-duration: 13s; background-color: rgba(255, 255, 255, 0.6); }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: scale(0.9); }
             to { opacity: 1; transform: scale(1); }
@@ -61,6 +80,14 @@
             from { transform: translateY(0); }
             to { transform: translateY(-10px); }
         }
+
+        @keyframes float {
+            0% { transform: translateY(0px) translateX(0px); opacity: 0; }
+            25% { opacity: 1; }
+            50% { transform: translateY(-20px) translateX(10px); }
+            75% { opacity: 1; }
+            100% { transform: translateY(0px) translateX(0px); opacity: 0; }
+        }
     </style>
 </head>
 <body>
@@ -69,5 +96,12 @@
         <p>Saber is here, grounded and ready to build.</p>
         <span class="emoji">⚔️</span>
     </div>
+    <!-- Particles -->
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
 </body>
 </html>
